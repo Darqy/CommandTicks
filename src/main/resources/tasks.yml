@@ -1,0 +1,29 @@
+#This task saves the worlds every 15 minutes
+save:
+  schedule: '*/15 * * * *'
+  commands:
+    - say Server saving...
+    - save-all
+    - say Server save complete
+#This task taxes all players on the server 15 minutes after 3am, 9am, 3pm and 9pm, every day
+tax:
+  #If enabled is set to false, the task will not be loaded on startup. Default, is true
+  enabled: false
+  schedule: '15 3,9,15,21 * * *'
+  commands:
+    - ^PLAYER pay ServerAccount 5
+#This task stops the server at midnight, every monday, wednesday, and friday
+stop:
+  enabled: true
+  schedule: '0 12 * * mon,wed,fri'
+  commands:
+    - say Server stopping in 30 seconds..
+    - ^PAUSE 10
+    - say Server stopping in 20 seconds..
+    - ^PAUSE 10
+    - say Server stopping in 10 seconds..
+    - ^PAUSE 5
+    - say Server stopping 5 Seconds..
+    - ^PAUSE 5
+    - say Server stopping!
+    - stop

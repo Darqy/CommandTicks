@@ -1,0 +1,21 @@
+name: CommandTicks
+version: ${p.version}
+description: Define commands to run with a unix-like cron scheduler!
+main: net.darqy.CommandTicks.CommandTicks
+commands:
+  commandticks:
+    description: Controls the entire plugin
+    usage: |
+          - /<command> stop [task] - Unschedule a task
+          - /<command> start [task] - Reschedule a task, can bypass enabled config value
+          - /<command> status [task] - Checks when task next runs
+          - /<command> suspend - Halts the task scheduler
+          - /<command> continue - Resume the task scheduler
+          - /<command> list - Lists all scheduled tasks
+          - /<command> reload - Reloads plugin configuration, and reschedules tasks
+    aliases: [ct]
+    permissions: commandticks.admin
+permissions:
+  commandticks.admin:
+    description: Allows use of the CommandTicks main command
+    default: op
