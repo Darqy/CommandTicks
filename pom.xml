@@ -4,17 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <groupId>net.darqy</groupId>
     <artifactId>CommandTicks</artifactId>
     <version>1.5.1</version>
     <name>CommandTicks</name>
     <url>http://darqy.net/</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <p.version>1.5.1</p.version>
-        <build.number>Unknown</build.number>
-    </properties>
 
     <!-- Repository locations -->
     <repositories>
@@ -30,6 +28,7 @@
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>it.sauronsoftware.cron4j</groupId>
@@ -39,7 +38,6 @@
     </dependencies>
 
     <build>
-        <finalName>${project.name}</finalName>
         <defaultGoal>clean install</defaultGoal>
         <!-- Resources -->
         <resources>
@@ -67,6 +65,46 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <tasks>
+                                <copy file="../${project.name}/target/${project.name}-${project.version}.jar"
+                                      tofile="../${project.name}/target/${project.name}.jar"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>  
+                            <artifactSet>
+                                <includes>
+                                    <include>it.sauronsoftware.cron4j:cron4j</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
